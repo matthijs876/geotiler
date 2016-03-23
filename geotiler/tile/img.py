@@ -1,7 +1,7 @@
 #
 # GeoTiler - library to create maps using tiles from a map provider
 #
-# Copyright (C) 2014-2015 by Artur Wroblewski <wrobell@pld-linux.org>
+# Copyright (C) 2014-2016 by Artur Wroblewski <wrobell@pld-linux.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -75,8 +75,8 @@ def _error_image(width, height):
     """
     Create error tile image.
 
-    The error tile image is PIL image object showing message that a map tail
-    could not be downloaded.
+    The error tile image is PIL image object showing message that a map
+    tile could not be downloaded.
 
     :param width: Width of tile image.
     :param height: Height of tile image.

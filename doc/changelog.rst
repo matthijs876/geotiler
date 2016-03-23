@@ -1,5 +1,11 @@
 Changelog
 =========
+0.8.0
+-----
+- implemented `geotiler-fetch` script to cache map tiles upfront
+- implemented `geotiler-route` script to draw GPX track on a map
+- OpenCV example added, thanks to `matthijs876`
+
 0.7.0
 -----
 - use :py:mod:`urllib` Python standard library to fetch map tiles, which

@@ -2,7 +2,7 @@
 #
 # GeoTiler - library to create maps using tiles from a map provider
 #
-# Copyright (C) 2014-2015 by Artur Wroblewski <wrobell@pld-linux.org>
+# Copyright (C) 2014-2016 by Artur Wroblewski <wrobell@pld-linux.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -67,25 +67,39 @@ def read_positions(filename):
 #
 # parse arguments
 #
-#parser = argparse.ArgumentParser(description=desc)
-parser = argparse.ArgumentParser()
+desc = """
+Read positions from set of GPX files and draw them on a map.
 
+The map size is set to 1920x1080 and can be changed with commandline
+parameter. The zoom and extents of the map are calculated automatically.
+"""
+
+parser = argparse.ArgumentParser(description=desc)
 parser.add_argument(
     '-v', '--verbose', dest='verbose', help='Make a bunch of noise',
     action='store_true'
 )
-
 providers = list(sorted(geotiler.provider.conf.PROVIDERS.keys()))
 parser.add_argument(
     '-p', '--provider', dest='provider', choices=providers, default='osm',
     help='Map provider or URL template like "http://example.com/{z}/{x}/{y}.png".'
 )
-
+parser.add_argument(
+    '-s', '--size', dest='size', nargs=2, type=int, default=(1920, 1080),
+    help='Size of map image'
+)
+parser.add_argument(
+    '-r', '--radius', dest='radius', type=float, default=0.5,
+    help='Radius of drawn point of a position'
+)
+parser.add_argument(
+    '-a', '--alpha', dest='alpha', type=float, default=0.5,
+    help='Color alpha of drawn point of a position'
+)
 parser.add_argument(
     '--cache', dest='cache', choices=['redis'], default='redis',
     help='specify caching strategy'
 )
-
 parser.add_argument('filename', nargs='+', help='GPX file')
 parser.add_argument('output', help='Output PNG file')
 
@@ -110,7 +124,7 @@ extent = min(x), min(y), max(x), max(y)
 # render map image
 #
 provider = geotiler.find_provider(args.provider)
-mm = geotiler.Map(size=(2880, 1620), extent=extent, provider=provider)
+mm = geotiler.Map(size=args.size, extent=extent, provider=provider)
 if mm.zoom > 18: # FIXME: max zoom in API missing
     mm = geotiler.Map(zoom=18, extent=extent)
 
@@ -129,8 +143,9 @@ cr = cairo.Context(surface)
 
 points = (mm.rev_geocode(p) for p in positions)
 for x, y in points:
-    cr.set_source_rgba(1.0, 0.0, 0.0, 0.5)
-    cr.arc(x, y, 0.5, 0, 2 * math.pi)
+    cr.set_source_rgba(1.0, 0.0, 0.0, args.alpha)
+    cr.arc(x, y, args.radius, 0, 2 * math.pi)
+    cr.fill()
     cr.stroke()
 
 surface.write_to_png(args.output)

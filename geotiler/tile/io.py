@@ -1,7 +1,7 @@
 #
 # GeoTiler - library to create maps using tiles from a map provider
 #
-# Copyright (C) 2014-2015 by Artur Wroblewski <wrobell@pld-linux.org>
+# Copyright (C) 2014-2016 by Artur Wroblewski <wrobell@pld-linux.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ from functools import partial
 logger = logging.getLogger(__name__)
 
 HEADERS = {
-    'User-Agent': 'GeoTiler/0.7.0',
+    'User-Agent': 'GeoTiler/0.8.0',
 }
 
 FMT_DOWNLOAD_LOG = 'Cannot download a tile due to error: {}'.format

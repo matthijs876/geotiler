@@ -2,7 +2,7 @@
 #
 # GeoTiler - library to create maps using tiles from a map provider
 #
-# Copyright (C) 2014-2015 by Artur Wroblewski <wrobell@pld-linux.org>
+# Copyright (C) 2014-2016 by Artur Wroblewski <wrobell@pld-linux.org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,8 +31,8 @@ from setuptools import setup, find_packages
 setup(
     name='geotiler',
     packages=find_packages('.'),
-    scripts=('bin/geotiler-lint',),
-    version='0.7.0',
+    scripts=('bin/geotiler-lint', 'bin/geotiler-route', 'bin/geotiler-fetch'),
+    version='0.8.0',
     description='GeoTiler - library to create maps using tiles'
         ' from a map provider',
     author='Artur Wroblewski',
